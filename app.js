@@ -1,6 +1,7 @@
 const keybaseCommands = require('./keybaseCommands');
 const program = require('commander');
 const blessed = require('blessed');
+const messager = require('./messager');
 
 //Setup
 program
@@ -15,24 +16,32 @@ if (!program.recipient || !program.address) {
   process.exit(1);
 }
 
+let messageSender = messager(program.address);
+messageSender.on('ready',  () => {
+  messageSender.on('message',  (message) => {
+    console.log(`Message: ${ message }`);
+  })
+  messageSender.send('Test');
+});
+
 //UI
-let screen = blessed.screen({
-  smartCSR: true
-});
+// let screen = blessed.screen({
+//   smartCSR: true
+// });
 
-screen.title = 'Keybase Communicator';
+// screen.title = 'Keybase Communicator';
 
-let list = blessed.list({
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '90%',
-  border: {
-    type: 'line'
-  },
-});
+// let list = blessed.list({
+//   top: 0,
+//   left: 0,
+//   width: '100%',
+//   height: '90%',
+//   border: {
+//     type: 'line'
+//   },
+// });
 
-screen.append(list);
+// screen.append(list);
 
 // let messageBox = blessed.prompt({
 //   top: '90%',
@@ -47,4 +56,4 @@ screen.append(list);
 // screen.append(messageBox);
 
 
-screen.render();
+// screen.render();
