@@ -7,6 +7,7 @@ const messager = require('./messager');
 program
   .option('-r --recipient [string]', 'Reciptient\'s Keybase username')
   .option('-a --address [string]', 'IP Address of Reciptient')
+  .option('-e --encrypt [bool]', 'Encrypt the messages with keybase')
   .parse(process.argv);
 
 //Sanity Checks
@@ -19,7 +20,13 @@ if (!program.recipient || !program.address) {
 let messageSender = messager(program.address);
 messageSender.on('ready',  () => {
   messageSender.on('message',  (message) => {
-    addMessage(program.recipient, message);
+    if (program.encrypt) {
+      keybaseCommands.decrypt(message, (decryptedMessage) => {
+        addMessage(decryptedMessage);
+      });
+    } else {
+      addMessage(program.recipient, message);
+    }
   });
 });
 
@@ -66,7 +73,14 @@ let messageBox = blessed.textbox({
 
 messageBox.on('submit', () => {
   if (messageBox.value === 'exit') process.exit();
-  messageSender.send(messageBox.value);
+  if (program.encrypt) {
+    keybaseCommands.encrypt(messageBox.value, program.recipient, (encryptedMessage) => {
+      messageSender.send(encryptedMessage);
+    });
+  } else {
+    messageSender.send(messageBox.value);
+  }
+  
   addMessage('you', messageBox.value);
   messageBox.clearValue();
   messageBox.readInput();
