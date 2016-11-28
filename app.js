@@ -19,41 +19,64 @@ if (!program.recipient || !program.address) {
 let messageSender = messager(program.address);
 messageSender.on('ready',  () => {
   messageSender.on('message',  (message) => {
-    console.log(`Message: ${ message }`);
+    // console.log(`Message: ${ message }`);
   })
   messageSender.send('Test');
 });
 
 //UI
-// let screen = blessed.screen({
-//   smartCSR: true
+let screen = blessed.screen({});
+
+screen.title = 'Keybase Communicator';
+
+screen.key(['q'], function() {
+  return process.exit(0);
+});
+// process.on('SIGINT', function() {
+//   console.log('Got SIGINT');
 // });
 
-// screen.title = 'Keybase Communicator';
+let form = blessed.form({
+  parent: screen,
+  keys: true,
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  bg: 'green'
+});
 
-// let list = blessed.list({
-//   top: 0,
-//   left: 0,
-//   width: '100%',
-//   height: '90%',
-//   border: {
-//     type: 'line'
-//   },
-// });
+
+let list = blessed.list({
+  parent: form,
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '90%',
+  border: {
+    type: 'line'
+  },
+});
+
+// list.addItem('test');
+// list.focus();
 
 // screen.append(list);
 
-// let messageBox = blessed.prompt({
-//   top: '90%',
-//   left: 0,
-//   width: '100%',
-//   height: '10%',
-//   border: {
-//     type: 'line'
-//   },
-// });
+let messageBox = blessed.textbox({
+  parent: form,
+  top: '90%',
+  left: 0,
+  width: '100%',
+  height: '10%',
+  border: {
+    type: 'line'
+  },
+});
 
-// screen.append(messageBox);
+// screen.append(form);
+// form.append(messageBox);
+messageBox.focus();
+messageBox.readInput();
 
-
-// screen.render();
+screen.render();
