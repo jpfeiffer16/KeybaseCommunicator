@@ -19,11 +19,8 @@ if (!program.recipient || !program.address) {
 let messageSender = messager(program.address);
 messageSender.on('ready',  () => {
   messageSender.on('message',  (message) => {
-    // console.log(`Message: ${ message }`);
-    list.addItem(`${ program.recipient }: ${ message }`);
-    screen.render();
-  })
-  messageSender.send('Test');
+    addMessage(program.recipient, message);
+  });
 });
 
 //UI
@@ -34,9 +31,6 @@ screen.title = 'Keybase Communicator';
 screen.key(['q'], function() {
   return process.exit(0);
 });
-// process.on('SIGINT', function() {
-//   console.log('Got SIGINT');
-// });
 
 let form = blessed.form({
   parent: screen,
@@ -73,6 +67,7 @@ let messageBox = blessed.textbox({
 messageBox.on('submit', () => {
   if (messageBox.value === 'exit') process.exit();
   messageSender.send(messageBox.value);
+  addMessage('you', messageBox.value);
   messageBox.clearValue();
   messageBox.readInput();
   screen.render();
@@ -82,3 +77,8 @@ messageBox.focus();
 messageBox.readInput();
 
 screen.render();
+
+function addMessage(user, message) { 
+  list.addItem(`${ user }: ${ message }`);
+  screen.render();
+}
