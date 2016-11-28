@@ -7,7 +7,7 @@ module.exports = (function() {
     });
   };
 
-  function decrypt(message) {
+  function decrypt(message, cb) {
     exec(`keybase decrypt -m "${ message }"`, (error, stdout, stderr) => {
       cb(stdout);
     });
