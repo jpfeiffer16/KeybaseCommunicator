@@ -22,7 +22,7 @@ messageSender.on('ready',  () => {
   messageSender.on('message',  (message) => {
     if (program.encrypt) {
       keybaseCommands.decrypt(message, (decryptedMessage) => {
-        addMessage(decryptedMessage);
+        addMessage(program.recipient, decryptedMessage);
       });
     } else {
       addMessage(program.recipient, message);
