@@ -20,6 +20,8 @@ let messageSender = messager(program.address);
 messageSender.on('ready',  () => {
   messageSender.on('message',  (message) => {
     // console.log(`Message: ${ message }`);
+    list.addItem(`${ program.recipient }: ${ message }`);
+    screen.render();
   })
   messageSender.send('Test');
 });
@@ -42,8 +44,7 @@ let form = blessed.form({
   left: 0,
   top: 0,
   width: '100%',
-  height: '100%',
-  bg: 'green'
+  height: '100%'
 });
 
 
@@ -58,11 +59,6 @@ let list = blessed.list({
   },
 });
 
-// list.addItem('test');
-// list.focus();
-
-// screen.append(list);
-
 let messageBox = blessed.textbox({
   parent: form,
   top: '90%',
@@ -74,8 +70,14 @@ let messageBox = blessed.textbox({
   },
 });
 
-// screen.append(form);
-// form.append(messageBox);
+messageBox.on('submit', () => {
+  if (messageBox.value === 'exit') process.exit();
+  messageSender.send(messageBox.value);
+  messageBox.clearValue();
+  messageBox.readInput();
+  screen.render();
+});
+
 messageBox.focus();
 messageBox.readInput();
 
