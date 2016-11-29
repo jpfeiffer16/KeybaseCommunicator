@@ -7,25 +7,40 @@ module.exports = function(address) {
 
   //Setup server
   let server = net.createServer((socket) => {
+    // connect(socket.remoteAddress);
+    // console.log('connected');
+
     socket.on('data', (data) => {
       emitter.emit('message', data.toString());
+      // console.log(data.toString());
     });
   });
 
-  server.listen(3000, '0.0.0.0');
-
-  //Setup client
-  let client = new net.Socket();
-  client.connect(3000, address, (err) => {
-    if (err) throw err;
+  server.listen(3000, '0.0.0.0', () => {
     emitter.emit('ready');
   });
 
-  function send(message) {
-    client.write(message);
+  //Setup client
+  let client = new net.Socket();
+  console.log(address);
+  // if (address) {
+  //   connect(address);
+  //   // send('Test');
+  // }
+
+  function connect(netaddress) {
   }
 
-  //Attach  exposed methods and return the emitter.
+  function send(message) {
+    //Can't write if the client is not connected
+    client.connect(3000, netaddress, (err) => {
+      if (err) throw err;
+      // console.log('Client connected');
+      client.write(message);
+    });
+  }
+
+  //Attach exposed methods and return the emitter.
   emitter.send = send;
 
   return emitter;
