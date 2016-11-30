@@ -36,8 +36,8 @@ module.exports = function(username) {
       }
       
     } else{
-      let user = msg.split('|')[0].split(':')[1];
-      let message = msg.split('|')[1];
+      let user = msg.toString().split('|')[0].split(':')[1];
+      let message = msg.toString().split('|')[1];
       emitter.emit('message', {
         user,
         message

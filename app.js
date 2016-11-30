@@ -54,13 +54,14 @@ function main() {
     if (program.address) {
       messageSender.sendComRequest(program.address);
     }
-    messageSender.on('message',  (message) => {
+    messageSender.on('message',  (info) => {
+      let {message, user} = info;
       if (program.encrypt) {
         keybaseCommands.decrypt(message, (decryptedMessage) => {
-          addMessage(program.recipient, decryptedMessage);
+          addMessage(user, decryptedMessage);
         });
       } else {
-        addMessage(program.recipient, message);
+        addMessage(user, message);
       }
     });
   });
