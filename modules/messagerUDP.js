@@ -72,23 +72,25 @@ module.exports = function(username) {
   //   // send('Test');
   // }
 
-  function send(message) {
-    senders.forEach((sender) => {
-      client.send(`msg:${ username }|${ message }`, 3000, sender.address, (err) => {
-        if (err) throw err;
-        //TODO: Do stuff here if we need to.
-      });
+  function send(message, sender) {
+    client.send(`msg:${ username }|${ message }`, 3000, sender.address, (err) => {
+      if (err) throw err;
+      //TODO: Do stuff here if we need to.
     });
-    
   }
 
   function sendComRequest(address) {
     client.send(`com:|${ username }`, 3000, address);
   }
 
+  function getSenders() {
+    return senders;
+  }
+
   //Attach exposed methods and return the emitter.
   emitter.send = send;
   emitter.sendComRequest = sendComRequest;
+  emitter.getSenders = getSenders;
 
   return emitter;
 };

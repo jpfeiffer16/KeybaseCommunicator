@@ -110,11 +110,17 @@ function main() {
   messageBox.on('submit', () => {
     if (messageBox.value === 'exit') process.exit();
     if (program.encrypt) {
-      keybaseCommands.encrypt(messageBox.value, program.recipient, (encryptedMessage) => {
-        messageSender.send(encryptedMessage);
+      let senders = messageSender.getSenders();
+      senders.forEach((sender) => {
+        keybaseCommands.encrypt(messageBox.value, sender.name, (encryptedMessage) => {
+          messageSender.send(encryptedMessage, sender);
+        });
       });
     } else {
-      messageSender.send(messageBox.value);
+      let senders = messageSender.getSenders();
+      senders.forEach((sender) => {
+        messageSender.send(messageBox.value, sender);
+      });
     }
     
     addMessage('you', messageBox.value);
