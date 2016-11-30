@@ -67,12 +67,13 @@ module.exports = function(username) {
     
   }
 
-  function sendComRequest(addres) {
+  function sendComRequest(address) {
     client.send(`com:|${ username }`, 3000, address);
   }
 
   //Attach exposed methods and return the emitter.
   emitter.send = send;
+  emitter.sendComRequest = sendComRequest;
 
   return emitter;
 };
