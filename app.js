@@ -6,7 +6,7 @@ const ngrok = require('ngrok');
 
 //Setup
 program
-  .option('-u --username [string]', 'your Keybase username\t[required]')
+  .option('-u --username [string]', 'Your Keybase username\t[required]')
   .option('-a --address [string]', 'IP Address of Reciptient\t[optional]')
   .option('-e --encrypt [bool]', 'Encrypt the messages with keybase\t[optional]')
   .option('-n --ngrok [bool]', 'Use ngrok to chat over the internet\t[optional]')
