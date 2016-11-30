@@ -26,7 +26,7 @@ module.exports = function(username) {
       //Setup sender
       senders.push({
         address: rinfo.address,
-        name: msg.split('|')[1]
+        name: msg.toString().split('|')[1]
       });
       //Now send them a com request
       sendComRequest(rinfo.address);
