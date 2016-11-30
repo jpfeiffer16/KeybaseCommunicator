@@ -16,6 +16,6 @@ Install local dependencies:
 ### Running
 From source: `node app.js --help`
 
-For example to chat encrypted with localhost/yourself: `node app.js -r <yourkeybasename> -a localhost -e`
+For example to chat encrypted with localhost/yourself: `node app.js -u <yourkeybasename> -a localhost -e`
 
 To exit the app, type `exit` into the chat box or press q when the chat box is not highlighted.
