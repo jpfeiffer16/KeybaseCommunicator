@@ -31,7 +31,7 @@ module.exports = function(username) {
       //Now send them a com request
       sendComRequest(rinfo.address);
     } else{
-      emitter.emit('message', msgs);
+      emitter.emit('message', msg);
     }
   });
 
