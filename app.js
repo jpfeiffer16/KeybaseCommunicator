@@ -1,20 +1,20 @@
-const keybaseCommands = require('./keybaseCommands');
+const keybaseCommands = require('./modules/keybaseCommands');
 const program = require('commander');
 const blessed = require('blessed');
-const messager = require('./messager');
+const messager = require('./modules/messagerUDP.js');
 const ngrok = require('ngrok');
 
 //Setup
 program
-  .option('-r --recipient [string]', 'Reciptient\'s Keybase username')
-  .option('-a --address [string]', 'IP Address of Reciptient')
-  .option('-e --encrypt [bool]', 'Encrypt the messages with keybase')
-  .option('-n --ngrok [bool]', 'Use ngrok to chat over the internet')
+  .option('-u --username [string]', 'your Keybase username\t[required]')
+  .option('-a --address [string]', 'IP Address of Reciptient\t[optional]')
+  .option('-e --encrypt [bool]', 'Encrypt the messages with keybase\t[optional]')
+  .option('-n --ngrok [bool]', 'Use ngrok to chat over the internet\t[optional]')
   .parse(process.argv);
 
 //Sanity Checks
-if (!program.recipient) {
-  console.warn('Must include a recipient.');
+if (!program.username) {
+  console.warn('Must include a username.');
   console.warn('Run with -h to see usage options.');
   process.exit(1);
 }
@@ -49,9 +49,12 @@ if  (program.ngrok) {
 
 function main() {
   // console.log('Main');
-  let messageSender = messager(program.address);
+  let messageSender = messager(program.username);
   messageSender.on('ready',  () => {
-  messageSender.on('message',  (message) => {
+    if (program.address) {
+      messageSender.sendComRequest(program.address);
+    }
+    messageSender.on('message',  (message) => {
       if (program.encrypt) {
         keybaseCommands.decrypt(message, (decryptedMessage) => {
           addMessage(program.recipient, decryptedMessage);
