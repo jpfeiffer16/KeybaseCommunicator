@@ -24,14 +24,24 @@ module.exports = function(username) {
     logger.log(`message: ${ msg }`);
     if (msg.toString().indexOf('com:') != -1) {
       //Setup sender
-      senders.push({
-        address: rinfo.address,
-        name: msg.toString().split('|')[1]
-      });
-      //Now send them a com request
-      sendComRequest(rinfo.address);
+      if (senders.filter((sender) => {
+        return sender.address == rinfo.address
+      }).length == 0) {
+        senders.push({
+          address: rinfo.address,
+          name: msg.toString().split('|')[1]
+        });
+        //Now send them a com request
+        sendComRequest(rinfo.address);
+      }
+      
     } else{
-      emitter.emit('message', msg);
+      let user = msg.split('|')[0].split(':')[1];
+      let message = msg.split('|')[1];
+      emitter.emit('message', {
+        user,
+        message
+      });
     }
   });
 
@@ -64,7 +74,7 @@ module.exports = function(username) {
 
   function send(message) {
     senders.forEach((sender) => {
-      client.send(message, 3000, sender.address, (err) => {
+      client.send(`msg:${ username }|${ message }`, 3000, sender.address, (err) => {
         if (err) throw err;
         //TODO: Do stuff here if we need to.
       });
