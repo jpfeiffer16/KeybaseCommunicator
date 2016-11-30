@@ -1,5 +1,4 @@
 const events = require('events');
-// const logger = require('../modules/logger');
 
 const dgram = require('dgram');
 
@@ -14,14 +13,12 @@ module.exports = function(username) {
   const server = dgram.createSocket('udp4');
 
   server.on('error', (err) => {
-    // logger.log('server error');
     console.log(`server error:\n${err.stack}`);
     server.close();
     process.exit(1);
   });
 
   server.on('message', (msg, rinfo) => {
-    // logger.log(`message: ${ msg }`);
     if (msg.toString().indexOf('com:') != -1) {
       //Setup sender
       if (senders.filter((sender) => {
@@ -46,7 +43,6 @@ module.exports = function(username) {
   });
 
   server.on('listening', () => {
-    // logger.log('listening');
     emitter.emit('ready');
   });
 
@@ -59,18 +55,10 @@ module.exports = function(username) {
   const client = dgram.createSocket('udp4');
 
   client.on('error', (err) => {
-    // logger.log('client error');
     console.log(`server error:\n${err.stack}`);
     server.close();
     process.exit(1);
   });
-
-  // let client = new net.Socket();
-  // console.log(address);
-  // if (address) {
-  //   connect(address);
-  //   // send('Test');
-  // }
 
   function send(message, sender) {
     client.send(`msg:${ username }|${ message }`, 3000, sender.address, (err) => {

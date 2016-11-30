@@ -7,12 +7,8 @@ module.exports = function(address) {
 
   //Setup server
   let server = net.createServer((socket) => {
-    // connect(socket.remoteAddress);
-    // console.log('connected');
-
     socket.on('data', (data) => {
       emitter.emit('message', data.toString());
-      // console.log(data.toString());
     });
   });
 
@@ -23,10 +19,6 @@ module.exports = function(address) {
   //Setup client
   let client = new net.Socket();
   console.log(address);
-  // if (address) {
-  //   connect(address);
-  //   // send('Test');
-  // }
 
   function connect(netaddress) {
   }
