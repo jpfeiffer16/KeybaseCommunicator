@@ -1,3 +1,5 @@
+#! /usr/bin/node
+
 const keybaseCommands = require('./modules/keybaseCommands');
 const program = require('commander');
 const blessed = require('blessed');
