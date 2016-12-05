@@ -5,6 +5,7 @@ A simple Keybase encrypted local chat app.
 
 ### Installing
 
+#### Locally from source
 `$ git clone git@github.com:jpfeiffer16/KeybaseCommunicator.git`
 
 `$ cd KeybaseCommunicator`
@@ -12,6 +13,22 @@ A simple Keybase encrypted local chat app.
 Install local dependencies:
 
 `$ npm install`
+
+#### Globally via npm
+
+`$ npm install -g keybasecommunicator`
+
+> Note: you may need to preface the command with `sudo` if you're on linux/bsd.
+
+Now you can launch the app from the terminal with the `kcom` command.
+
+EG:
+
+`$ kcom -u <keybase username>`
+
+and then connect to that with
+
+`$ kcom -u <keybase username> -a <ip address of machine running previous command>`
 
 ### Running
 From source: `node app.js --help`
