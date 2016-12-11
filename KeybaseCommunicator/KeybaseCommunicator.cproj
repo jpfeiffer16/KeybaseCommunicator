@@ -12,6 +12,8 @@
     <Packages>
       <Packages>
         <Package file="/usr/lib/pkgconfig/gtk+-3.0.pc" name="GTK+" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/ncurses.pc" name="ncursesw" IsProject="False" />
+        <Package file="/usr/lib/pkgconfig/ncurses++.pc" name="ncurses++w" IsProject="False" />
       </Packages>
     </Packages>
   </PropertyGroup>
