@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="KeybaseCommunicator/KeybaseCommunicator.cproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="KeybaseCommunicator/main.c">
+    <Files>
+      <File FileName="KeybaseCommunicator/main.c" Line="26" Column="8" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
